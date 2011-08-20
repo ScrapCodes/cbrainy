@@ -1,0 +1,11 @@
+To build.
+
+make
+Binaries will be created in bin/
+
+To generate docs
+make doc
+Documentation can be viewed by opening doc/html/index.html in a web browser
+
+To generate tar 
+make tar
