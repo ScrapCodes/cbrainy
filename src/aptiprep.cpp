@@ -90,7 +90,7 @@ bool equations::division(){
 }
 
 /** Calculate accuracy !*/
-double accuracy()
+double accuracy(double correct,double wrong)
 {
 	return (correct/(correct+wrong))*100;	
 }
@@ -99,10 +99,10 @@ void exitEvent(){
 
 	time(&end);
 	double diff= difftime(end,start);
-	cout<<" Dude you took :"<<diff<<" seconds To solve "<<correct+wrong<<" equations."<<endl;
-	double a=accuracy();
-	if(a>90 && ((correct+wrong)*100)/diff >5){
-		cout<<"\nyou are genius !! your accuracy was :"<<a<<"%"<<" and speed was more than 15 eqs per min"<<endl;
+	cout<<" You took :"<<diff<<" seconds To solve "<<correct+wrong<<" equations."<<endl;
+	double a=accuracy(correct,wrong);
+	if(a>90 && double((correct+wrong)*100)/(diff) >50){
+		cout<<"\nyou are genius !! your accuracy was :"<<a<<"%"<<" and your avg. speed was more than 30 eqs per min"<<endl;
 	} 
 	else cout<<"\nYour accuracy :"<<a<<"%"<<endl;
 	exit(0);

@@ -1,0 +1,3 @@
+This file will contain upcoming features for version 0.1
+
+1) Add Ncurses support by building a wrapper and expose an easy interface so that a developer may not have to learn Ncurses to work on this project. 
