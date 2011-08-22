@@ -1,3 +1,5 @@
+please install ncurses library (Most probably it is installed by default)
+
 To build.:
 
 make
