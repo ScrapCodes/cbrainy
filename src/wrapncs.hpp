@@ -37,6 +37,8 @@ class wrapNcs{
 		int startx, starty, width, height; /**<  < position and dimensions for equation box. */
 		int xInfo,yInfo,wInfo,hInfo; /** < position and dimensions for Info box. */
 		int row,col;  /**< row and col for positioning the equaitons. */
+		/** Function to create and initialize a new window */
+		WINDOW *create_newwin(int height, int width, int starty, int startx);
 	public :
 		string str; /** < will be used to store the user replies. Need an alternate approach to this. */
 	wrapNcs()
@@ -72,12 +74,12 @@ class wrapNcs{
 		endwin();			/* End curses mode		  */
 	}
 
-	WINDOW *create_newwin(int height, int width, int starty, int startx);
 	void introduction();
 	void destroy_win(WINDOW *local_win);
 	void printEquations(string eqLeft,string eqRight,string operation);
 	/**Reposition to Default position for curser to recieve user input*/
 	void curserReposition();
+	/** Print Info dialogue box */
 	void printInfo(string information, int flag);
 	void bye();
 };

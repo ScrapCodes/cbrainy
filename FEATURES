@@ -4,3 +4,5 @@ or simply the wish list.
 1) Add Ncurses support by building a wrapper and expose an easy interface so that a developer may not have to learn Ncurses to work on this project. 
 2) Use STLs for string manipulation.
 3) Exception handling for taking care of the unexpected.
+4) Implement Event model.
+5) Have a proper intro and good bye screen.
