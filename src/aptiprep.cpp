@@ -27,15 +27,24 @@
 			@return If the user answered correctly or not.
 		*/
 bool equations::addition(){
-
+	/*
 	cout<<"Eq:"<<(i=rand()%(difficulty*10)+1)<<"+"<<(j=rand()%(difficulty*10)+1)<<endl;
-	cin>>k;
+	*/
+	i=rand()%(difficulty*10)+1;
+	j=rand()%(difficulty*10)+1;
+	string t1,t2;
+	char t3[20],t4[20];
+	sprintf(t3,"%d",i);
+	sprintf(t4,"%d",j);
+	wraped.printEquations(t1.assign(t3),t2.assign(t4),add);
+	sscanf(wraped.str.c_str(),"%d",&k);
 	if(i+j==k) 
 	{	
 		correct++;
+		wraped.printInfo("Correct!!",1);
 		return true;
 	}
-	else if(k==9999) { state=eXit; exitEvent();}
+	else if(k==9999) { state=eXit; exitEvent(this);}
 	return false;
 }
 
@@ -47,28 +56,46 @@ bool equations::subtraction(){
 	i=rand()%(difficulty*10)+1;
 	j=rand()%(difficulty*10)+1;
 	int x,y;
-	cout<<"Eq:"<<(x= (i>j) ? i:j) << "-" <<( y=(i>j) ? j:i )<<endl;
-	cin>>k;
+//	cout<<"Eq:"<<(x=  (i>j) ? i:j)<< "-" <<( y=(i>j) ? j:i )<<endl;
+	x=(i>j) ? i:j;
+	y=(i>j) ? j:i; 
+	string t1,t2;
+	char t3[20],t4[20];
+	sprintf(t3,"%d",x);
+	sprintf(t4,"%d",y);
+	wraped.printEquations(t1.assign(t3),t2.assign(t4),sub);
+	sscanf(wraped.str.c_str(),"%d",&k);
+//	cin>>k;
 	if(x-y==k)
 	{
 		correct++;
+		wraped.printInfo("Correct!!",1);
 		return true;
 	}
-	else if(k==9999) { state=eXit; exitEvent();}
+	else if(k==9999) { state=eXit; exitEvent(this);}
 	return false;
 }
 		/** function to generate the multiplication equations
 			@return If the user answered correctly or not.
 		*/
 bool equations::multiplication(){
-	cout<<"Eq:"<<(i=rand()%(difficulty*10)+1)<<"*"<<(j=rand()%(difficulty*10)+1)<<endl;
-	cin>>k;
+	/*cout<<"Eq:"<<(i=rand()%(difficulty*10)+1)<<"*"<<(j=rand()%(difficulty*10)+1)<<endl;
+	cin>>k;*/
+	i=rand()%(difficulty*10)+1;
+	j=rand()%(difficulty*10)+1;
+	string t1,t2;
+	char t3[20],t4[20];
+	sprintf(t3,"%d",i);
+	sprintf(t4,"%d",j);
+	wraped.printEquations(t1.assign(t3),t2.assign(t4),mul);
+	sscanf(wraped.str.c_str(),"%d",&k);
 	if(i*j==k) 
 	{
 		correct++;
+		wraped.printInfo("Correct!!",1);
 		return true;
 	}
-	else if(k==9999) { state=eXit; exitEvent();}
+	else if(k==9999) { state=eXit; exitEvent(this);}
 	return false;
 }
 		/** funciton to generate the division equaitons
@@ -78,14 +105,21 @@ bool equations::division(){
 	/** Ensuring division by factors only */
 	i=rand()%(difficulty*10)+1;
 	j=rand()%(difficulty*10)+1;
-	cout<<"Eq:"<<i*j<<"/"<<j<<endl;
-	cin>>k;
+	string t1,t2;
+	char t3[20],t4[20];
+	sprintf(t3,"%d",i*j);
+	sprintf(t4,"%d",j);
+	wraped.printEquations(t1.assign(t3),t2.assign(t4),div);
+	sscanf(wraped.str.c_str(),"%d",&k);
+	//cout<<"Eq:"<<i*j<<"/"<<j<<endl;
+	//cin>>k;
 	if(k==i) 
 	{
 		correct++;
+		wraped.printInfo("Correct!!",1);
 		return true;
 	}
-	else if(k==9999) { state=eXit; exitEvent();}
+	else if(k==9999) { state=eXit; exitEvent(this);}
 	return false;
 }
 
@@ -95,9 +129,10 @@ double accuracy(double correct,double wrong)
 	return (correct/(correct+wrong))*100;	
 }
 
-void exitEvent(){
+void exitEvent(equations *tobedestroyed){
 
 	time(&end);
+	delete tobedestroyed;
 	double diff= difftime(end,start);
 	cout<<" You took :"<<diff<<" seconds To solve "<<correct+wrong<<" equations."<<endl;
 	double a=accuracy(correct,wrong);
@@ -117,19 +152,20 @@ int main()
 	cout<<"Enter no of equations you would like to solve ! You can quit in the middle by entering 9999"<<endl;
 	cin>>N;
 
-	equations set;	
+	equations *set;	
+	set=new equations();
 	// set up the random sead and also the starting time for measuing time taken.
 	srand(time(&start));
 	// Randomly pick the type of question for the user.
 	while(N){
 		switch((rand()%4+1)){
-			case 1: if(!set.addition())	{cout<<"\nWrong!!!\n";wrong++;}
+			case 1: if(!set->addition())	{set->wraped.printInfo("Wrong!!",2);wrong++;}
 					break;
-			case 2: if(!set.multiplication())	{cout<<"\nWrong!!!\n";wrong++;}
+			case 2: if(!set->multiplication())	{set->wraped.printInfo("Wrong!!",2);wrong++;}
 					break;
-			case 3: if(!set.division())	{cout<<"\nWrong!!!\n";wrong++;}
+			case 3: if(!set->division())		{set->wraped.printInfo("Wrong!!",2);wrong++;}
 					break;
-			case 4: if(!set.subtraction()) {cout<<"\nWrong!!!\n";wrong++;}
+			case 4: if(!set->subtraction())	{set->wraped.printInfo("Wrong!!",2);wrong++;}
 					break;
 			default: //not possible
 				break;
@@ -138,6 +174,6 @@ int main()
 	}
 
 	state=eXit;	
-	exitEvent();
+	exitEvent(set);
 	return 0;
 }

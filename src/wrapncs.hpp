@@ -1,5 +1,4 @@
-
-/**  This is wrapper containing calls to ncurses library. This way we will have
+/**  This is wrapper containing calls to ncurses library. Thus we have
 * Ncurses interface for our Aptitude Prepare. 
 *
 * This file is distributed under GPLv2 http://www.gnu.org/licenses/gpl-2.0.html
@@ -23,4 +22,63 @@
 @version 1.0
 */
 
-#include<ncurses.h>
+
+#include <ncurses.h>
+#include <cstdlib>
+#include <string>
+
+using namespace std;
+/** Class that wraps the necessary things to give terminal based GUI support for our AP*/
+class wrapNcs{
+	private:
+
+		WINDOW *winEQ; /**< ncurses windows object for equations */
+		WINDOW *winINFO; /**< ncurses windows object for informaiton box */
+		int startx, starty, width, height; /**<  < position and dimensions for equation box. */
+		int xInfo,yInfo,wInfo,hInfo; /** < position and dimensions for Info box. */
+		int row,col;  /**< row and col for positioning the equaitons. */
+	public :
+		string str; /** < will be used to store the user replies. Need an alternate approach to this. */
+	wrapNcs()
+	{
+		initscr();			/* Start curses mode 		*/
+		cbreak();			/* Line buffering disabled, Pass on
+						 * every thing to me 		*/
+		getmaxyx(stdscr,row,col);              /* get the number of rows and columns */
+		if(has_colors() == FALSE)
+		{       endwin();
+			printf("Your terminal does not support color\n");
+			exit(1);
+		}
+		
+		start_color();                  /* Start color                  */
+		height = 10; /* to be adjusted*/
+		width = 12; /* to be adjusted*/
+		starty = (LINES - height) / 2;	/* Calculating for a center placement */
+		startx = (COLS - width) / 2;	/* of the window		*/
+		// Following are for position and dimension of info box
+		wInfo=20;
+		hInfo=5;
+		xInfo= (COLS-wInfo)/2; /** < Let's place it in the centre */
+		yInfo= 3;  /** < and 3 rows down the top */
+		
+		keypad(stdscr, TRUE);		/* enable keyboard shortcuts 	*/
+		refresh();
+	}
+	~wrapNcs()
+	{
+		destroy_win(winINFO);
+		destroy_win(winEQ);
+		endwin();			/* End curses mode		  */
+	}
+
+	WINDOW *create_newwin(int height, int width, int starty, int startx);
+	void introduction();
+	void destroy_win(WINDOW *local_win);
+	void printEquations(string eqLeft,string eqRight,string operation);
+	/**Reposition to Default position for curser to recieve user input*/
+	void curserReposition();
+	void printInfo(string information, int flag);
+	void bye();
+};
+

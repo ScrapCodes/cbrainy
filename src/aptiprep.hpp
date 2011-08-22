@@ -26,6 +26,8 @@
 #include<cstdio>
 #include<cstdlib>
 #include<ctime>
+#include "wrapncs.hpp"
+
 using namespace std;
 
 /** No of correct answers !*/
@@ -52,8 +54,6 @@ eXit /**< indicates state of the program completed and ready for exit*/
 /** Enum state stores the current state of the program*/
 events state;
 
-/** handles the case of both normal and interrupted exits*/
-void exitEvent();
 
 /** Class equations has functions to generate different types of equations(multiply,addition,subtraction or division and configurable difficulties 
  */
@@ -64,10 +64,20 @@ class equations{
 		/** difficulty metric*/
 		int difficulty;
 
+		string add;
+		string mul;
+		string div;
+		string sub;
 	public:
+		wrapNcs wraped;
 		/**Default contructor to initialize the defaults*/
 		equations()
 		{
+			add=string("+");
+			mul=string("*");
+			//div=string("÷");
+			div=string("/");
+			sub=string("-");
 			difficulty=1;
 			state =running;
 		}
@@ -88,3 +98,5 @@ class equations{
 		*/
 		bool multiplication(); 
 };
+/** handles the case of both normal and interrupted exits will soon be replaced by something nicer*/
+void exitEvent(equations *);
