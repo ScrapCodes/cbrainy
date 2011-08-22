@@ -48,7 +48,9 @@ double accuracy();
 /** Enum ? because we chose for event model to trigger exit */
 enum events{
 running, /**< indicates state of the program as running*/
-eXit /**< indicates state of the program completed and ready for exit*/
+eXit, /**< indicates state of the program completed and ready for exit*/
+paused, /**< To be implemented */
+stopped /**< To be implemented */
 };
 
 /** Enum state stores the current state of the program*/
