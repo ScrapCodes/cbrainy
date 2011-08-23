@@ -6,3 +6,10 @@ or simply the wish list.
 3) Exception handling for taking care of the unexpected.
 4) Implement Event model.
 5) Have a proper intro and good bye screen.
+6) Have a status box, showing time left and correct and wrong responses till now. (may be using Pthread library).
+
+
+
+New Features for future versions.
+1) have another game that improves some expect of brain may be some puzzle.
+2) improve over all interface.
