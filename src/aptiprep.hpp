@@ -32,10 +32,10 @@
 using namespace std;
 
 /** No of correct answers !*/
-static int correct;
+static unsigned int correct;
 
 /** No of wrong answers !*/
-static int wrong;
+static unsigned int wrong;
 
 /** record the start time */
 time_t start;
@@ -63,7 +63,7 @@ events state;
 class equations{
 	private:
 		/** Some temporary variables to be used by the functions internally*/
-		int i,j,k; 
+		unsigned int i,j,k; 
 
 		string add;
 		string mul;
@@ -71,7 +71,7 @@ class equations{
 		string sub;
 	public:
 		/** difficulty metric*/
-		int difficulty;
+		unsigned int difficulty;
 		wrapNcs *wraped;
 		/**Default contructor to initialize the defaults*/
 		equations(const char *intro)

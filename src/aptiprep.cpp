@@ -60,7 +60,7 @@ bool equations::subtraction(){
 	/** ensuring subtraction to be of positive result */
 	i=rand()%(difficulty*10)+1;
 	j=rand()%(difficulty*10)+1;
-	int x,y;
+	unsigned int x,y;
 //	cout<<"Eq:"<<(x=  (i>j) ? i:j)<< "-" <<( y=(i>j) ? j:i )<<endl;
 	x=(i>j) ? i:j;
 	y=(i>j) ? j:i; 
