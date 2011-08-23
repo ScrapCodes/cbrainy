@@ -139,9 +139,9 @@ void exitEvent(equations *tobedestroyed){
 	time(&end);
 	double diff= difftime(end,start);
 	ostringstream oss;
-	oss<<" You took :"<<diff<<" seconds To solve "<<correct+wrong<<" equations."<<endl;
+	oss<<" You took :"<<diff<<" seconds To solve "<<correct+wrong<<" equations of difficulty level:"<<tobedestroyed->difficulty<<endl;
 	double a=accuracy(correct,wrong);
-	if(a>90 && double((correct+wrong)*100)/(diff)*(tobedestroyed->difficulty) >50*(tobedestroyed->difficulty)){
+	if(a>90 && double((correct+wrong)*(tobedestroyed->difficulty) *100)/(diff)>50*(tobedestroyed->difficulty)){
 		oss<<"\nyou are genius !! your accuracy was :"<<a<<"%"<<" and your avg. speed was more than 30 eqs per min"<<endl;
 	} 
 	else oss<<"\nYour accuracy :"<<a<<"%"<<endl;

@@ -25,17 +25,8 @@
 
 
 #include "wrapncs.hpp"
-/* only for testing*/
-/*
-   int main(int argc, char *argv[])
-   {
-   wrapNcs wp;
-   wp.printEquations("45","65","*");
-   wp.printInfo("Hello World",1);
-   getch();
-   return 0;
-   }
- */
+
+
 void wrapNcs::bye(){
  /*This method will replace exitEvent function*/
 	int hIntro,wIntro,xIntro,yIntro;
@@ -76,6 +67,7 @@ void wrapNcs::introduction(string text){
 	destroy_win(deco_w2);
 	clear();
 	refresh();
+	
 }
 void wrapNcs::curserReposition()
 {
