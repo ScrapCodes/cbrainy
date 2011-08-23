@@ -25,6 +25,7 @@
 #include<iostream>
 #include<cstdio>
 #include<cstdlib>
+#include <sstream>
 #include<ctime>
 #include "wrapncs.hpp"
 
@@ -63,18 +64,21 @@ class equations{
 	private:
 		/** Some temporary variables to be used by the functions internally*/
 		int i,j,k; 
-		/** difficulty metric*/
-		int difficulty;
 
 		string add;
 		string mul;
 		string div;
 		string sub;
 	public:
-		wrapNcs wraped;
+		/** difficulty metric*/
+		int difficulty;
+		wrapNcs *wraped;
 		/**Default contructor to initialize the defaults*/
-		equations()
+		equations(const char *intro)
 		{
+	/*		wraped("Hiii ready for solving some crazy equations  ???...."); */
+
+			wraped= new wrapNcs(intro);
 			add=string("+");
 			mul=string("*");
 			//div=string("÷");
@@ -83,6 +87,12 @@ class equations{
 			difficulty=1;
 			state =running;
 		}
+		~equations()
+		{
+			delete wraped;
+		}
+		/** getter for the string str of wrapper*/	
+		string getStr();
 		/** function to generate the addition equations
 			@return If the user answered correctly or not.
 		*/

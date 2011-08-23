@@ -39,9 +39,19 @@ class wrapNcs{
 		int row,col;  /**< row and col for positioning the equaitons. */
 		/** Function to create and initialize a new window */
 		WINDOW *create_newwin(int height, int width, int starty, int startx);
+		/** Create an invisible window , usefull for restricting spread of text */
+		WINDOW *create_newwinInv(int height, int width, int starty, int startx);
+	/** function to delete a  window and do the cleaning stuff */
+	void destroy_win(WINDOW *local_win);
 	public :
 		string str; /** < will be used to store the user replies. Need an alternate approach to this. */
-	wrapNcs()
+	/** Empty contructor to generate reference */
+	wrapNcs(){
+		winEQ=NULL;
+		winINFO=NULL;
+		height=0; //Find an alternate technique
+	}
+	wrapNcs(const char* introduce)
 	{
 		initscr();			/* Start curses mode 		*/
 		cbreak();			/* Line buffering disabled, Pass on
@@ -66,21 +76,31 @@ class wrapNcs{
 		
 		keypad(stdscr, TRUE);		/* enable keyboard shortcuts 	*/
 		refresh();
+		string temp;
+		temp.assign(introduce);
+		introduction(temp);
 	}
 	~wrapNcs()
 	{
+		if(height!=0){
 		destroy_win(winINFO);
 		destroy_win(winEQ);
+		clear();
+		refresh();
+		bye();
 		endwin();			/* End curses mode		  */
+		}
 	}
 
-	void introduction();
-	void destroy_win(WINDOW *local_win);
+	/** Give an introduction to your program.*/
+	void introduction(string text);
+	/** Print equations in a nice manner */	
 	void printEquations(string eqLeft,string eqRight,string operation);
 	/**Reposition to Default position for curser to recieve user input*/
 	void curserReposition();
 	/** Print Info dialogue box */
 	void printInfo(string information, int flag);
+	/** Think how you want to say bye bye */
 	void bye();
 };
 

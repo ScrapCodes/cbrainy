@@ -38,10 +38,44 @@
  */
 void wrapNcs::bye(){
  /*This method will replace exitEvent function*/
+	int hIntro,wIntro,xIntro,yIntro;
+	hIntro=LINES-10;
+	wIntro=COLS-10;
+	xIntro=(COLS-wIntro)/2;
+	yIntro=(LINES-hIntro)/2;
+	WINDOW *deco_w1=create_newwin(hIntro,wIntro,yIntro,xIntro);
+	WINDOW *deco_w2=create_newwin(hIntro-4,wIntro-4,yIntro+2,xIntro+2);
+	WINDOW *winText=create_newwinInv(hIntro-6,wIntro-6,yIntro+3,xIntro+3);
+	wprintw(winText,"%s",str.c_str());
+	wprintw(winText,"\nbye bye !! \nhit F2 key to finish\n");
+	wrefresh(winText);
+	while(getch()!=KEY_F(2)){}
+	destroy_win(winText);
+	destroy_win(deco_w1);
+	destroy_win(deco_w2);
 }
 /** A method to give a brief introduction and do some initialization*/
-void wrapNcs::introduction(){
-
+void wrapNcs::introduction(string text){
+	int hIntro,wIntro,xIntro,yIntro;
+	hIntro=LINES-10;
+	wIntro=COLS-10;
+	xIntro=(COLS-wIntro)/2;
+	yIntro=(LINES-hIntro)/2;
+	WINDOW *deco_w1=create_newwin(hIntro,wIntro,yIntro,xIntro);
+	WINDOW *deco_w2=create_newwin(hIntro-4,wIntro-4,yIntro+2,xIntro+2);
+	WINDOW *winText=create_newwinInv(hIntro-6,wIntro-6,yIntro+3,xIntro+3);
+	wprintw(winText,"%s",text.c_str());
+	wprintw(winText,"\nPlease Input:");
+//	while(getch()!=KEY_RIGHT){}
+	char temp[80];
+	wgetstr(winText,temp);
+	wrefresh(winText);
+	str.assign(temp);
+	destroy_win(winText);
+	destroy_win(deco_w1);
+	destroy_win(deco_w2);
+	clear();
+	refresh();
 }
 void wrapNcs::curserReposition()
 {
@@ -85,6 +119,19 @@ WINDOW *wrapNcs::create_newwin(int height, int width, int starty, int startx)
 	box(local_win, 0 , 0);		/* 0, 0 gives default characters 
 					 * for the vertical and horizontal
 					 * lines			*/
+	wrefresh(local_win);		/* Show that box 		*/
+	return local_win;
+}
+
+WINDOW *wrapNcs::create_newwinInv(int height, int width, int starty, int startx)
+{	WINDOW *local_win;
+
+	local_win = newwin(height, width, starty, startx);
+	box(local_win, 0 , 0);		/* 0, 0 gives default characters 
+					 * for the vertical and horizontal
+					 * lines			*/
+	
+	wborder(local_win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
 	wrefresh(local_win);		/* Show that box 		*/
 	return local_win;
 }

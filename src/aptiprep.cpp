@@ -22,7 +22,12 @@
 @version 1.0
 */
 
+//#define DEBUG
+
 #include "aptiprep.hpp"
+string equations::getStr(){
+	return wraped->str;
+}
 		/** function to generate the addition equations
 			@return If the user answered correctly or not.
 		*/
@@ -36,12 +41,12 @@ bool equations::addition(){
 	char t3[20],t4[20];
 	sprintf(t3,"%d",i);
 	sprintf(t4,"%d",j);
-	wraped.printEquations(t1.assign(t3),t2.assign(t4),add);
-	sscanf(wraped.str.c_str(),"%d",&k);
+	wraped->printEquations(t1.assign(t3),t2.assign(t4),add);
+	sscanf(getStr().c_str(),"%d",&k);
 	if(i+j==k) 
 	{	
 		correct++;
-		wraped.printInfo("Correct!!",1);
+		wraped->printInfo("Correct!!",1);
 		return true;
 	}
 	else if(k==9999) { state=eXit; exitEvent(this);}
@@ -63,13 +68,13 @@ bool equations::subtraction(){
 	char t3[20],t4[20];
 	sprintf(t3,"%d",x);
 	sprintf(t4,"%d",y);
-	wraped.printEquations(t1.assign(t3),t2.assign(t4),sub);
-	sscanf(wraped.str.c_str(),"%d",&k);
+	wraped->printEquations(t1.assign(t3),t2.assign(t4),sub);
+	sscanf(getStr().c_str(),"%d",&k);
 //	cin>>k;
 	if(x-y==k)
 	{
 		correct++;
-		wraped.printInfo("Correct!!",1);
+		wraped->printInfo("Correct!!",1);
 		return true;
 	}
 	else if(k==9999) { state=eXit; exitEvent(this);}
@@ -87,12 +92,12 @@ bool equations::multiplication(){
 	char t3[20],t4[20];
 	sprintf(t3,"%d",i);
 	sprintf(t4,"%d",j);
-	wraped.printEquations(t1.assign(t3),t2.assign(t4),mul);
-	sscanf(wraped.str.c_str(),"%d",&k);
+	wraped->printEquations(t1.assign(t3),t2.assign(t4),mul);
+	sscanf(getStr().c_str(),"%d",&k);
 	if(i*j==k) 
 	{
 		correct++;
-		wraped.printInfo("Correct!!",1);
+		wraped->printInfo("Correct!!",1);
 		return true;
 	}
 	else if(k==9999) { state=eXit; exitEvent(this);}
@@ -109,14 +114,14 @@ bool equations::division(){
 	char t3[20],t4[20];
 	sprintf(t3,"%d",i*j);
 	sprintf(t4,"%d",j);
-	wraped.printEquations(t1.assign(t3),t2.assign(t4),div);
-	sscanf(wraped.str.c_str(),"%d",&k);
+	wraped->printEquations(t1.assign(t3),t2.assign(t4),div);
+	sscanf(getStr().c_str(),"%d",&k);
 	//cout<<"Eq:"<<i*j<<"/"<<j<<endl;
 	//cin>>k;
 	if(k==i) 
 	{
 		correct++;
-		wraped.printInfo("Correct!!",1);
+		wraped->printInfo("Correct!!",1);
 		return true;
 	}
 	else if(k==9999) { state=eXit; exitEvent(this);}
@@ -132,14 +137,16 @@ double accuracy(double correct,double wrong)
 void exitEvent(equations *tobedestroyed){
 
 	time(&end);
-	delete tobedestroyed;
 	double diff= difftime(end,start);
-	cout<<" You took :"<<diff<<" seconds To solve "<<correct+wrong<<" equations."<<endl;
+	ostringstream oss;
+	oss<<" You took :"<<diff<<" seconds To solve "<<correct+wrong<<" equations."<<endl;
 	double a=accuracy(correct,wrong);
-	if(a>90 && double((correct+wrong)*100)/(diff) >50){
-		cout<<"\nyou are genius !! your accuracy was :"<<a<<"%"<<" and your avg. speed was more than 30 eqs per min"<<endl;
+	if(a>90 && double((correct+wrong)*100)/(diff)*(tobedestroyed->difficulty) >50*(tobedestroyed->difficulty)){
+		oss<<"\nyou are genius !! your accuracy was :"<<a<<"%"<<" and your avg. speed was more than 30 eqs per min"<<endl;
 	} 
-	else cout<<"\nYour accuracy :"<<a<<"%"<<endl;
+	else oss<<"\nYour accuracy :"<<a<<"%"<<endl;
+	tobedestroyed->wraped->str.assign(oss.str());
+	delete tobedestroyed;
 	exit(0);
 }
 
@@ -148,24 +155,34 @@ int main()
 	int N=0;
 	correct=0;
 	wrong=0;
-
+/*
 	cout<<"Enter no of equations you would like to solve ! You can quit in the middle by entering 9999"<<endl;
 	cin>>N;
-
+*/
 	equations *set;	
-	set=new equations();
+	set=new equations("Enter no of equations you would like to solve ! and difficulty by seperating them with a space for example if you want to solve 10 equations of difficulty 1 then please input:2 1<Enter>.\n Also you can quit in the middle by typing 9999 as the answer.");
+	string inp=set->getStr();
+	int difficulty;
+	
+	sscanf(inp.c_str(),"%d %d",&N,&difficulty);
+	
+#ifdef DEBUG
+	printw("Eq:%d Diff:%d",N,difficulty);
+	getch();
+#endif
+	set->difficulty=difficulty;
 	// set up the random sead and also the starting time for measuing time taken.
 	srand(time(&start));
 	// Randomly pick the type of question for the user.
 	while(N){
 		switch((rand()%4+1)){
-			case 1: if(!set->addition())	{set->wraped.printInfo("Wrong!!",2);wrong++;}
+			case 1: if(!set->addition())	{set->wraped->printInfo("Wrong!!",2);wrong++;}
 					break;
-			case 2: if(!set->multiplication())	{set->wraped.printInfo("Wrong!!",2);wrong++;}
+			case 2: if(!set->multiplication())	{set->wraped->printInfo("Wrong!!",2);wrong++;}
 					break;
-			case 3: if(!set->division())		{set->wraped.printInfo("Wrong!!",2);wrong++;}
+			case 3: if(!set->division())		{set->wraped->printInfo("Wrong!!",2);wrong++;}
 					break;
-			case 4: if(!set->subtraction())	{set->wraped.printInfo("Wrong!!",2);wrong++;}
+			case 4: if(!set->subtraction())	{set->wraped->printInfo("Wrong!!",2);wrong++;}
 					break;
 			default: //not possible
 				break;
