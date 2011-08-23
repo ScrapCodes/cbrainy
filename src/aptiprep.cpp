@@ -84,8 +84,6 @@ bool equations::subtraction(){
 			@return If the user answered correctly or not.
 		*/
 bool equations::multiplication(){
-	/*cout<<"Eq:"<<(i=rand()%(difficulty*10)+1)<<"*"<<(j=rand()%(difficulty*10)+1)<<endl;
-	cin>>k;*/
 	i=rand()%(difficulty*10)+1;
 	j=rand()%(difficulty*10)+1;
 	string t1,t2;
@@ -152,7 +150,7 @@ void exitEvent(equations *tobedestroyed){
 
 int main()
 {
-	int N=0;
+	unsigned int N=0;
 	correct=0;
 	wrong=0;
 /*
@@ -162,7 +160,7 @@ int main()
 	equations *set;	
 	set=new equations("Enter no of equations you would like to solve ! and difficulty by seperating them with a space for example if you want to solve 10 equations of difficulty 1 then please input:2 1<Enter>.\n Also you can quit in the middle by typing 9999 as the answer.");
 	string inp=set->getStr();
-	int difficulty;
+	unsigned int difficulty;
 	
 	sscanf(inp.c_str(),"%d %d",&N,&difficulty);
 	
