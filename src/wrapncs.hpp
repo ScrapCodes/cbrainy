@@ -28,7 +28,7 @@
 #include <string>
 
 using namespace std;
-/** Class that wraps the necessary things to give terminal based GUI support for our AP*/
+/** Class that wraps the necessary things to give terminal based GUI support for our APP*/
 class wrapNcs{
 	private:
 

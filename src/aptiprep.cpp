@@ -158,7 +158,7 @@ int main()
 	cin>>N;
 */
 	equations *set;	
-	set=new equations("Enter no of equations you would like to solve ! and difficulty by seperating them with a space for example if you want to solve 10 equations of difficulty 1 then please input:2 1<Enter>.\n Also you can quit in the middle by typing 9999 as the answer.");
+	set=new equations("Enter no of equations you would like to solve ! and difficulty by seperating them with a space for example if you want to solve 10 equations of difficulty 1 then please input:2 1<Enter>.\n Also you can quit in the middle of the game by typing 9999 as the answer or press esc and enter to exit right away.");
 	string inp=set->getStr();
 	unsigned int difficulty;
 	
