@@ -7,7 +7,7 @@ Binaries will be created in bin/
 
 To generate docs:
 make doc
-P.S. Documentation can be viewed by opening doc/html/index.html in a web browser
+Documentation can be viewed by opening doc/html/index.html in a web browser
 
 To generate tar : 
 make tar
