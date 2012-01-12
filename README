@@ -13,6 +13,6 @@ To generate tar :
 make tar
 
 To install it on your system. 
-Which means you can simply type aptiprep on your cmdline to use it.:
+Which means you can simply type cbrainy on your cmdline to use it.:
 
 sudo make install

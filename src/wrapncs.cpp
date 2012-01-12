@@ -18,7 +18,7 @@
 * Also add information on how to contact you by electronic and paper mail.
 
 @author Prashant Sharma
-@email prashant dot iiith at gmail dot com
+@email scrapcodes at gmail dot com
 @version 1.0
 */
 
